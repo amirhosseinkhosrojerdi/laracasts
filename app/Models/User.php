@@ -41,4 +41,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // thread
+    public function threads(){
+        return $this->hasMany(Thead::class);
+    }
+
+    // answer
+    public function answers(){
+        return $this->hasMany(Answer::class);
+    }
 }
