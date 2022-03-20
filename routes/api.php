@@ -18,6 +18,12 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::prefix('v1/auth')->group(function(){
-    Route::post('/register', 'App\Http\Controllers\API\V01\Auth\AuthController@register');
+Route::prefix('v1')->group(function(){
+    // Authentication Route
+    Route::prefix('/auth')->group(function(){
+        Route::post('/register', 'App\Http\Controllers\API\V01\Auth\AuthController@register')->name('auth.register');
+        Route::post('/login', 'App\Http\Controllers\API\V01\Auth\AuthController@login')->name('auth.login');
+        Route::get('/user', 'App\Http\Controllers\API\V01\Auth\AuthController@user')->name('auth.user');
+        Route::post('/logout', 'App\Http\Controllers\API\V01\Auth\AuthController@logout')->name('auth.logout');
+    });
 });
