@@ -7,6 +7,7 @@ use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
@@ -30,7 +31,7 @@ class AuthController extends Controller
 
         return response()->json([
             'message' => "user create successfully"
-        ], 201);
+        ], Response::HTTP_CREATED);
     }
 
     /**
@@ -50,7 +51,7 @@ class AuthController extends Controller
 
         // Check User Credentials For Login
         if(Auth::attempt($request->only(['email', 'password']))){
-            return response()->json(Auth::user(), 200);
+            return response()->json(Auth::user(), Response::HTTP_OK);
         }
 
         throw ValidationException::withMessages([
@@ -60,20 +61,24 @@ class AuthController extends Controller
 
     /**
      * Show User Info
+     * @method GET
+     * @return JsonResponse
      */
     public function user()
     {
-        return response()->json(Auth::user(), 200);
+        return response()->json(Auth::user(), Response::HTTP_OK);
     }
 
     /**
      * Logout User
+     * @method GET
+     * @return JsonResponse
      */
     public function logout()
     {
         Auth::logout();
         return response()->json([
             'message' => "user logout successfully"
-        ], 200);
+        ], Response::HTTP_OK);
     }
 }

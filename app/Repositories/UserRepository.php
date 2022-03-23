@@ -11,7 +11,7 @@ class UserRepository
     /**
      * @param Request $request
      */
-    public function create(Request $request)
+    public function create(Request $request): void
     {
         User::create([
             'name' => $request->name,
